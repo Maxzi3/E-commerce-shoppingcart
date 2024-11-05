@@ -1,13 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import Spinner from "./Spinner.jsx";
+import Cart from "../assets/icon-cart.svg";
+import Minus from "../assets/icon-minus.svg";
+import Plus from "../assets/icon-plus.svg";
+import { CartContext } from "./CartContext.jsx";
+
 const AllProduct = () => {
   const [allProduct, setAllProduct] = useState([]); // Full list of properties from API
   const [displayedProducts, setDisplayedProducts] = useState([]); // List of properties to be displayed
   const [remainingProducts, setRemainingProducts] = useState([]); // List of remaining properties to choose from
   const [searchTerm, setSearchTerm] = useState(""); // State to handle search input
   const [Loading, setLoading] = useState(true);
-   const [showFullDescription, setShowFullDescription] = useState({});
+  const [showFullDescription, setShowFullDescription] = useState({});
+  const { addToCart} = useContext(CartContext);
+  const [quantities, setQuantities] = useState({});
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -17,6 +24,12 @@ const AllProduct = () => {
         setAllProduct(data); // Save the full list of products
         setDisplayedProducts(data.slice(0, 10)); // Display the first 10 products initially
         setRemainingProducts(data.slice(10)); // Store the remaining products
+        // Initialize quantities for each product ID after fetching data
+        const initialQuantities = data.reduce((acc, product) => {
+          acc[product.id] = 1; // Start each product quantity at 1
+          return acc;
+        }, {});
+        setQuantities(initialQuantities);
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
@@ -55,7 +68,7 @@ const AllProduct = () => {
     // Get the next 5 random products
     const additionalProducts = shuffledRemaining.slice(0, 5);
 
-    // Update displayed properties
+    // Update displayed products
     setDisplayedProducts((prevDisplayed) => [
       ...prevDisplayed,
       ...additionalProducts,
@@ -63,6 +76,21 @@ const AllProduct = () => {
 
     // Remove the newly added products from the remaining list
     setRemainingProducts(shuffledRemaining.slice(5));
+  };
+  // Function to handle increase
+  const increase = (productId) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [productId]: (prevQuantities[productId] || 1) + 1, // Default to 1 if undefined
+    }));
+  };
+
+  // Function to handle decrease
+  const decrease = (productId) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [productId]: Math.max(1, (prevQuantities[productId] || 1) - 1), // Default to 1 if undefined
+    }));
   };
 
   return (
@@ -130,6 +158,32 @@ const AllProduct = () => {
                             </span>
                           </div>
                         </div>
+                      </div>
+                      <div className="flex justify-between items-center mt-10">
+                        <div className="flex items-center md:w-24 justify-between bg-gray-200 p-2 gap-4 rounded-md">
+                          <img
+                            onClick={() => decrease(product.id)}
+                            src={Minus}
+                            alt="icon"
+                            className="w-3 h-1 cursor-pointer"
+                          />
+                          <h1>{quantities[product.id] || 1}</h1>
+                          <img
+                            onClick={() => increase(product.id)}
+                            src={Plus}
+                            alt="icon"
+                            className="w-3 cursor-pointer"
+                          />
+                        </div>
+                        <button
+                          onClick={() =>
+                            addToCart(product, quantities[product.id] || 1)
+                          }
+                          className="flex justify-center items-center gap-2 bg-gray-200 hover:bg-orange-500 text-black py-2 px-5 rounded-md"
+                        >
+                          <img src={Cart} alt="icon" className=" w-4" />
+                          Add to cart
+                        </button>
                       </div>
                     </div>
                   </div>

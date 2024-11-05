@@ -44,7 +44,7 @@ const Navbar = () => {
         </div>
       </header>
       {/* Mobile View */}
-      <header className="text-gray-600 body-font fixed w-full top-0 bg-white">
+      <header className="text-gray-600 body-font fixed w-full bg-white">
         <div className="md:hidden flex flex-row justify-between w-11/12 h-full  mx-auto py-4 px-2 z-50">
           <button onClick={ToggleMenu} className="md:hidden z-50">
             {!isOpen ? (
@@ -53,7 +53,7 @@ const Navbar = () => {
               <img src={Close} alt="" className="w-7 cursor-pointer" />
             )}
           </button>
-          <NavLink to="/" className="mr-4 font-bold text-2xl">
+          <NavLink to="/" className="mr-4 font-bold text-2xl z-50">
             LIZZY STORES
           </NavLink>
           <div className="flex gap-4">
@@ -64,7 +64,7 @@ const Navbar = () => {
           </div>
         </div>
         <nav
-          className={`bg-white overflow-hidden w-1/2 max-h-auto absolute top-0 left-0 flex flex-col px-5 pt-20 pb-40 shadow-2xl text-2xl ${
+          className={`bg-white overflow-hidden w-2/3 max-h-auto absolute top-0 left-0 flex flex-col px-5 pt-20 pb-40 shadow-2xl text-2xl ${
             isOpen ? "transform translate-x-0" : "transform -translate-x-full"
           }`}
         >

@@ -14,7 +14,7 @@ const Footer = () => {
         <div className="container px-5 pt-24 pb-4 mx-auto flex flex-col ">
           <a
             to="/"
-            className="flex flex-col w-20 font-medium items-center ml-3 text-sm  hover:text-orange-800 pt-2  hover:bg-white"
+            className="flex flex-col w-20 font-medium items-center ml-3 text-sm  hover:text-orange-800 pt-10 pb-2"
           >
             <span className="text-xl text-primary">LIZZY</span>{" "}
             <span className="border-t-2 text-primary border-gray-500 hover:border-white">

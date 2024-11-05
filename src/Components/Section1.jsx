@@ -1,11 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Spinner from "./Spinner.jsx";
+import Cart from "../assets/icon-cart.svg";
+import Minus from "../assets/icon-minus.svg";
+import Plus from "../assets/icon-plus.svg";
 import { Link } from "react-router-dom";
+import { CartContext } from "./CartContext.jsx";
 
 const Section1 = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showFullDescription, setShowFullDescription] = useState({});
+  const [quantities, setQuantities] = useState({});
+  const { addToCart } = useContext(CartContext);
+  
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -32,6 +39,11 @@ const Section1 = () => {
         // Select the first 3 items after filtering
         const randomProduct = evenProduct.slice(0, 3);
         setData(randomProduct);
+        const initialQuantities = data.reduce((acc, product) => {
+          acc[product.id] = 1;
+          return acc;
+        }, {});
+        setQuantities(initialQuantities);
       } catch (error) {
         console.log(
           "There was an error fetching the data from the API:",
@@ -50,7 +62,21 @@ const Section1 = () => {
       [id]: !prevState[id],
     }));
   };
+  // Function to handle increase
+  const increase = (productId) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [productId]: prevQuantities[productId] + 1,
+    }));
+  };
 
+  // Function to handle decrease
+  const decrease = (productId) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [productId]: Math.max(1, prevQuantities[productId] - 1), // Prevent going below 1
+    }));
+  };
   return (
     <div>
       <section className="text-primary body-font">
@@ -109,6 +135,32 @@ const Section1 = () => {
                           </div>
                         </div>
                       </div>
+                    </div>
+                    <div className="flex justify-between items-center p-4">
+                      <div className="flex items-center md:w-24 justify-between bg-gray-200 p-2 gap-4 rounded-md">
+                        <img
+                          onClick={() => decrease(product.id)}
+                          src={Minus}
+                          alt="icon"
+                          className="w-3 h-1 cursor-pointer"
+                        />
+                        <h1>{quantities[product.id] || 1}</h1>
+                        <img
+                          onClick={() => increase(product.id)}
+                          src={Plus}
+                          alt="icon"
+                          className="w-3 cursor-pointer"
+                        />
+                      </div>
+                      <button
+                        onClick={() =>
+                          addToCart(product, quantities[product.id] || 1)
+                        }
+                        className="flex justify-center items-center  gap-2 bg-black/50 text-white py-2 px-5 rounded-md "
+                      >
+                        <img src={Cart} alt="icon" className="w-4" />
+                        Add to cart
+                      </button>
                     </div>
                   </div>
                 </div>
