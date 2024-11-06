@@ -10,7 +10,7 @@ import {
 const Footer = () => {
   return (
     <div>
-      <footer className=" body-font">
+      <footer className=" body-font ">
         <div className="container px-5 pt-24 pb-4 mx-auto flex flex-col ">
           <a
             to="/"

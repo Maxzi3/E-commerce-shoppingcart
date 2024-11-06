@@ -156,7 +156,7 @@ const Section1 = () => {
                         onClick={() =>
                           addToCart(product, quantities[product.id] || 1)
                         }
-                        className="flex justify-center items-center  gap-2 bg-black/50 text-white py-2 px-5 rounded-md "
+                        className="flex justify-center items-center  gap-2 bg-gray-200 hover:bg-orange-500 text-black py-2 px-5 rounded-md "
                       >
                         <img src={Cart} alt="icon" className="w-4" />
                         Add to cart
@@ -170,7 +170,7 @@ const Section1 = () => {
         </div>
         <Link
           to="/product"
-          className="bg-black text-white py-2 px-1 rounded hover:bg-secondary flex justify-center w-32 mx-auto"
+          className="bg-black hover:bg-orange-600 text-white py-2 px-1 rounded hover:bg-secondary flex justify-center w-32 mx-auto"
         >
           Load More
         </Link>

@@ -13,6 +13,8 @@ import Cart from "./Pages/Cart";
 import Product from "./Pages/ProductPage";
 import NotfoundPage from "./Pages/NotfoundPage";
 import { CartProvider } from "./Components/CartContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   const Router = createBrowserRouter(
@@ -33,6 +35,18 @@ const App = () => {
       {" "}
       {/* Wrap the entire RouterProvider with CartProvider */}
       <RouterProvider router={Router} />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </CartProvider>
   );
 };

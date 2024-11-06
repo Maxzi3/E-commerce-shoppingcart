@@ -13,10 +13,10 @@ const handleQuantityChange = (productId, quantity) => {
   }
 };
   return (
-    <div className="h-screen mb-20">
-      <h1 className="text-center text-3xl py-5 uppercase ">Your Cart</h1>
+    <div className="h-auto">
+      <h1 className="text-center font-bold text-3xl py-5 uppercase ">Your Cart</h1>
       {cart.length === 0 ? (
-        <p>Your cart is empty.</p>
+        <p className="text-center text-lg py-4 underline underline-offset-4 text-red-600 pb-24">Your cart is empty.</p>
       ) : (
         <div className="flex flex-col gap-2">
           {cart.map((item) => (
@@ -34,7 +34,7 @@ const handleQuantityChange = (productId, quantity) => {
                 <p className="mb-2">Quantity: {item.quantity}</p>
                 <p>
                   Total Price: $
-                  {item.price ? `${(item.price * 0.7).toFixed(2)}` : "$0.00"}
+                  {item.price ? `${((item.price * 0.7)* item.quantity).toFixed(2)}` : "$0.00"}
                 </p>
                 <div className="flex md:justify-normal justify-between md:gap-20 my-4   ">
                   <button

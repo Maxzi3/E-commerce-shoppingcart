@@ -1,4 +1,6 @@
 import React, { createContext, useState } from "react";
+import { toast } from "react-toastify";
+
 
 // Create a new context for the cart
 export const CartContext = createContext();
@@ -13,6 +15,7 @@ export const CartProvider = ({ children }) => {
     setCart((prevCart) => {
       const isProductInCart = prevCart.find((item) => item.id === product.id);
       if (isProductInCart) {
+         toast.info(`${product.title} quantity updated!`);
         // If product is already in cart, increase quantity
         return prevCart.map((item) =>
           item.id === product.id
@@ -21,6 +24,7 @@ export const CartProvider = ({ children }) => {
         );
       } else {
         // Add new product to cart with the selected quantity
+        toast.success(`${product.title} added to cart!`);
         return [...prevCart, { ...product, quantity }];
       }
     });

@@ -41,11 +41,10 @@ const AllProduct = () => {
   }, []);
 
   const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
-
+    setSearchTerm(e.target.value)
     // Filter the products based on the search term
     const filteredProducts = allProduct.filter((product) =>
-      product.location.toLowerCase().includes(e.target.value.toLowerCase())
+      product.category.toLowerCase().includes(e.target.value.toLowerCase())
     );
 
     // Update displayed products with filtered ones
@@ -94,18 +93,18 @@ const AllProduct = () => {
   };
 
   return (
-    <div className="text-primary">
+    <div className="text-primary pt-20">
       {/* Search Bar */}
-      {/* <div className="mb-4">
+      <div className="">
         <input
-          className="border-2 p-2 w-11/12 "
+          className="border-2 p-2 w-10/12 md:mx-12 mx-8 outline-none "
           type="search"
           name="Search"
-          placeholder="Search by location"
+          placeholder="Search by Category"
           value={searchTerm}
           onChange={handleSearch}
         />
-      </div> */}
+      </div>
       <Spinner loading={Loading} />
       <section>
         <div className="container px-5 py-24 mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -120,7 +119,7 @@ const AllProduct = () => {
                 <div className="p-4 md:w-full">
                   <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
                     <img
-                      className="md:h-56 w-10/12 mx-auto "
+                      className="md:h-56 md:w-10/12 w-7/12 mx-auto "
                       src={product.image}
                       alt={product.title}
                     />

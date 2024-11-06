@@ -8,7 +8,7 @@ const ProductPage = () => {
        navigate("/product");
      };
   return (
-    <div className="pt-24">
+    <div className="">
       <button onClick={handleBack} className="flex items-center p-4 text-secondary">
         <FaArrowLeft className="mx-2" />
         Back to Products

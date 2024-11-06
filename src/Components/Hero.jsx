@@ -1,5 +1,5 @@
 import React from "react";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -12,12 +12,12 @@ const Hero = () => {
           <h2 className="pb-10 px-10 md:text-xl text-base">
             THE DISCOUNT STORE
           </h2>
-          <button
-            to="/properties"
-            className="bg-black hover:bg-blue-700 text-white font-bold py-3 px-4 rounded mx-10"
+          <Link
+            to="/product"
+            className="bg-black hover:bg-orange-600 text-white font-bold py-3 px-4 rounded mx-10"
           >
             Buy Now
-          </button>
+          </Link>
         </div>
         <div className="md:m-20 mx-auto mt-14 z-0 hidden md:block ">
           <h1

@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Spinner from "./Spinner";
 import { useParams } from "react-router-dom";
+import Cart from "../assets/icon-cart.svg";
+import Minus from "../assets/icon-minus.svg";
+import Plus from "../assets/icon-plus.svg";
+import { CartContext } from "./CartContext.jsx";
 
 const Product = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [quantities, setQuantities] = useState({});
+  const { addToCart } = useContext(CartContext);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -13,6 +19,11 @@ const Product = () => {
         const response = await fetch(apiUrl);
         const data = await response.json();
         setData(data);
+        const initialQuantities = data.reduce((acc, product) => {
+          acc[product.id] = 1;
+          return acc;
+        }, {});
+        setQuantities(initialQuantities);
       } catch (error) {
         console.log(
           "There was an error fetching the data from the API:",
@@ -24,9 +35,25 @@ const Product = () => {
     };
     fetchProduct();
   }, []);
+  // Function to handle increase
+  const increase = (productId) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [productId]: prevQuantities[productId] + 1,
+    }));
+  };
 
+  // Function to handle decrease
+  const decrease = (productId) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [productId]: Math.max(1, prevQuantities[productId] - 1), // Prevent going below 1
+    }));
+  };
   const { id } = useParams();
-  const ProductItem = data.find((product) => product.id === parseInt(id));
+  const ProductItem = data.find(
+    (ProductItem) => ProductItem.id === parseInt(id)
+  );
 
   // Check if ProductItem is defined
   if (!ProductItem) {
@@ -37,7 +64,7 @@ const Product = () => {
     );
   }
   return (
-    <div className="p-4 border w-9/12 mx-auto bg rounded-md shadow-md">
+    <div className="p-4 border md:w-9/12 w-11/12 mx-auto bg rounded-md shadow-md">
       <img
         src={ProductItem.image || "https://dummyimage.com/721x401"}
         alt={ProductItem.title}
@@ -50,10 +77,10 @@ const Product = () => {
         <h3 className="text-xl font-bold text-primary mb-2">
           {ProductItem.title}
         </h3>
-
+        <p className="text-lg mt-2">{ProductItem.description}</p>
         {/* Price Display */}
-        <div className="flex flex-row justify-between">
-          <span className="text-red-600 line-through">
+        <div className="flex flex-row justify-between items-center my-4">
+          <span className="text-red-600 line-through text-xl">
             ${ProductItem.price}
           </span>
           <div>
@@ -65,16 +92,33 @@ const Product = () => {
             </span>
           </div>
         </div>
-
-        <p className="text-lg mt-2">{ProductItem.description}</p>
         <span className="flex items-center justify-between">
-          <a
-            href={ProductItem.sellerLink}
-            target="_blank"
-            className="bg-black hover:bg-blue-700 text-white font-bold py-3 px-4 rounded my-6 "
-          >
-            Add to cart
-          </a>
+          <div className="flex justify-between items-center gap-2 mx-auto md:p-4">
+            <div className="flex items-center md:w-24 justify-between bg-gray-200 p-2 gap-4 rounded-md">
+              <img
+                onClick={() => decrease(ProductItem.id)}
+                src={Minus}
+                alt="icon"
+                className="w-3 h-1 cursor-pointer"
+              />
+              <h1>{quantities[ProductItem.id] || 1}</h1>
+              <img
+                onClick={() => increase(ProductItem.id)}
+                src={Plus}
+                alt="icon"
+                className="w-3 cursor-pointer"
+              />
+            </div>
+            <button
+              onClick={() =>
+                addToCart(ProductItem, quantities[ProductItem.id] || 1)
+              }
+              className="flex justify-center items-center  gap-2 bg-gray-200 hover:bg-orange-500 text-black py-2 px-5 rounded-md "
+            >
+              <img src={Cart} alt="icon" className="w-4" />
+              Add to cart
+            </button>
+          </div>
         </span>
       </div>
     </div>
