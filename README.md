@@ -1,8 +1,24 @@
-# React + Vite
+# Lizzy Stores - eCommerce Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Description
 
-Currently, two official plugins are available:
+Lizzy Stores is a fully functional eCommerce website that allows users to browse and purchase products. It features a cart system where users can add, update, and remove items. The website also includes a dark mode toggle, product quantity adjustment, and price calculation based on quantity.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project was built using **React**, **Tailwind CSS**, and includes features such as context-based cart management, dark mode support, and dynamic product updates.
+
+## Features
+
+- **Cart System**: Users can add items to the cart, update item quantities, and remove items.
+- **Price Calculation**: Prices are dynamically calculated based on the quantity of items added to the cart.
+- **Dark Mode**: Toggle between light and dark modes for a better user experience.
+- **Responsive Design**: The website is responsive and optimized for both mobile and desktop views.
+- **Item Display**: Each item in the cart displays a title, image, price, and quantity.
+
+## Technologies Used
+
+- **React**: JavaScript library for building user interfaces.
+- **Tailwind CSS**: Utility-first CSS framework for fast UI development.
+- **React Context API**: For managing global state such as cart data and dark mode.
+- **React Icons**: For using icons like trash bin and plus/minus icons.
+
+
