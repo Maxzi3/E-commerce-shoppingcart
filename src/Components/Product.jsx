@@ -10,7 +10,7 @@ const Product = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [quantities, setQuantities] = useState({});
-  const { addToCart } = useContext(CartContext);
+  const { addToCart,  darkMode } = useContext(CartContext);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -64,11 +64,15 @@ const Product = () => {
     );
   }
   return (
-    <div className="p-4 border md:w-9/12 w-11/12 mx-auto bg rounded-md shadow-md">
+    <div
+      className={`${
+        darkMode ? "dark bg-black text-white" : "bg-white text-black"
+      } border md:w-9/12 w-11/12 mx-auto bg rounded-md shadow-md  dark:border-orange-600`}
+    >
       <img
         src={ProductItem.image || "https://dummyimage.com/721x401"}
         alt={ProductItem.title}
-        className="w-9/12 mx-auto"
+        className="w-7/12 mx-auto h-7/12 object-cover  rounded-md"
       />
       <div className="p-4">
         <h1 className="text-2xl font-bold text-primary mb-2">
@@ -101,7 +105,9 @@ const Product = () => {
                 alt="icon"
                 className="w-3 h-1 cursor-pointer"
               />
-              <h1>{quantities[ProductItem.id] || 1}</h1>
+              <h1 className="dark:text-black">
+                {quantities[ProductItem.id] || 1}
+              </h1>
               <img
                 onClick={() => increase(ProductItem.id)}
                 src={Plus}

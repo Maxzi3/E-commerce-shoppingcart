@@ -8,4 +8,8 @@
     body{
         font-family: "Roboto", sans-serif;
         }
+        
+}
+*{
+    /* @apply dark:bg-black */
 }

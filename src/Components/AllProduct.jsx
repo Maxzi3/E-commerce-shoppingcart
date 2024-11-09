@@ -5,6 +5,7 @@ import Cart from "../assets/icon-cart.svg";
 import Minus from "../assets/icon-minus.svg";
 import Plus from "../assets/icon-plus.svg";
 import { CartContext } from "./CartContext.jsx";
+import { FaStar } from "react-icons/fa6";
 
 const AllProduct = () => {
   const [allProduct, setAllProduct] = useState([]); // Full list of properties from API
@@ -13,7 +14,7 @@ const AllProduct = () => {
   const [searchTerm, setSearchTerm] = useState(""); // State to handle search input
   const [Loading, setLoading] = useState(true);
   const [showFullDescription, setShowFullDescription] = useState({});
-  const { addToCart} = useContext(CartContext);
+  const { addToCart, darkMode} = useContext(CartContext);
   const [quantities, setQuantities] = useState({});
 
   useEffect(() => {
@@ -22,6 +23,7 @@ const AllProduct = () => {
         const response = await fetch("https://fakestoreapi.com/products"); // Replace with your actual API endpoint
         const data = await response.json();
         setAllProduct(data); // Save the full list of products
+        console.log(data)
         setDisplayedProducts(data.slice(0, 10)); // Display the first 10 products initially
         setRemainingProducts(data.slice(10)); // Store the remaining products
         // Initialize quantities for each product ID after fetching data
@@ -93,11 +95,12 @@ const AllProduct = () => {
   };
 
   return (
-    <div className="text-primary pt-20">
+    <div className={` ${
+          darkMode ? "dark bg-black text-white" : "bg-white text-black" }text-primary h-auto pt-10 dark:bg-black`}>
       {/* Search Bar */}
-      <div className="">
+      <div className="md:mt-4">
         <input
-          className="border-2 p-2 w-10/12 md:mx-12 mx-8 outline-none "
+          className="border-2 p-2 w-10/12 md:mx-12 mx-8 outline-none dark:border-orange-600 "
           type="search"
           name="Search"
           placeholder="Search by Category"
@@ -107,7 +110,7 @@ const AllProduct = () => {
       </div>
       <Spinner loading={Loading} />
       <section>
-        <div className="container px-5 py-24 mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="container px-5 py-24 mx-auto grid grid-cols-1 md:grid-cols-4 gap-4">
           {displayedProducts.map((product) => {
             const isFullDescriptionShown = showFullDescription[product.id];
             const description = isFullDescriptionShown
@@ -115,11 +118,14 @@ const AllProduct = () => {
               : product.description.slice(0, 122) + "...";
 
             return (
-              <div key={product.id} className="flex flex-col md:flex-row -m-4">
+              <div
+                key={product.id}
+                className="flex flex-col md:flex-row -m-4 dark:text-white"
+              >
                 <div className="p-4 md:w-full">
-                  <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+                  <div className="h-full border-2 border-gray-200 dark:border-orange-600 border-opacity-60 rounded-lg overflow-hidden">
                     <img
-                      className="md:h-56 md:w-10/12 w-7/12 mx-auto "
+                      className="md:h-56 h-56 w-full mx-auto "
                       src={product.image}
                       alt={product.title}
                     />
@@ -127,23 +133,24 @@ const AllProduct = () => {
                       <h2 className="tracking-widest text-xs title-font font-medium text-secondary mb-1">
                         {product.category}
                       </h2>
-                      <h1 className="text-lg font-medium mb-3">
+                      <Link
+                        to={`/product/${product.id}`}
+                        className="text-lg font-medium mb-3 hover:underline hover:text-blue-700"
+                      >
                         {product.title}
-                      </h1>
-                      <p className="leading-relaxed mb-3">{description}</p>
+                      </Link>
+                      {/* <p className="leading-relaxed mb-3">{description}</p>
                       <button
                         onClick={() => toggleDescription(product.id)}
                         className="text-secondary text-sm text-green-900  hover:text-gray-900"
                       >
                         {isFullDescriptionShown ? "Less" : "More"}
-                      </button>
+                      </button> */}
                       <div className="flex flex-row justify-between items-center">
-                        <Link
-                          to={`/product/${product.id}`}
-                          className="hover:text-indigo-500"
-                        >
-                          Learn More
-                        </Link>
+                        <p className="leading-relaxed mb-3 flex items-center gap-1">
+                          <FaStar />
+                          <span>{product.rating.rate}</span>
+                        </p>
                         <div className="flex flex-col gap-2">
                           <span className="text-red-600 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 line-through">
                             ${product.price}
@@ -166,7 +173,9 @@ const AllProduct = () => {
                             alt="icon"
                             className="w-3 h-1 cursor-pointer"
                           />
-                          <h1>{quantities[product.id] || 1}</h1>
+                          <h1 className="dark:text-black">
+                            {quantities[product.id] || 1}
+                          </h1>
                           <img
                             onClick={() => increase(product.id)}
                             src={Plus}
@@ -195,7 +204,7 @@ const AllProduct = () => {
           <div className="text-center mt-8">
             <button
               onClick={loadMoreProducts}
-              className="bg-black text-white py-2 px-4 rounded hover:bg-secondary"
+              className="bg-black dark:bg-white dark:text-black hover:bg-orange-600 text-white py-2 px-4  rounded hover:bg-secondary"
             >
               Load More
             </button>

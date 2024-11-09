@@ -6,13 +6,11 @@ import Footer from "../Components/Footer";
 const MainLayout = () => {
   return (
     <div>
-      <>
-        <Navbar />
-        <div className="md:pt-24">
-          <Outlet />
-        </div>
-        <Footer />
-      </>
+      <Navbar />
+      <div className="pt-16">
+        <Outlet />
+      </div>
+      <Footer />
     </div>
   );
 };

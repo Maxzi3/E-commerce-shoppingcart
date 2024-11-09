@@ -5,6 +5,7 @@ import Minus from "../assets/icon-minus.svg";
 import Plus from "../assets/icon-plus.svg";
 import { Link } from "react-router-dom";
 import { CartContext } from "./CartContext.jsx";
+import { FaStar } from "react-icons/fa6";
 
 const Section1 = () => {
   const [data, setData] = useState([]);
@@ -37,7 +38,7 @@ const Section1 = () => {
         );
 
         // Select the first 3 items after filtering
-        const randomProduct = evenProduct.slice(0, 3);
+        const randomProduct = evenProduct.slice(0, 4);
         setData(randomProduct);
         const initialQuantities = data.reduce((acc, product) => {
           acc[product.id] = 1;
@@ -79,12 +80,12 @@ const Section1 = () => {
   };
   return (
     <div>
-      <section className="text-primary body-font">
-        <h1 className="text-center text-2xl pt-20 underline underline-offset-8">
+      <section className="text-primary body-font dark:text-white py-2 ">
+        <h1 className="text-center text-2xl pt-20 underline dark:text-orange-600 underline-offset-8">
           Featured Product
         </h1>
         <Spinner loading={loading} />
-        <div className="container px-5 py-24 mx-auto grid grid-cols-1 md:gap-2 gap-10 md:grid-cols-3 md:w-11/12">
+        <div className="container px-5 py-24 mx-auto grid grid-cols-1 md:gap-2 gap-10 md:grid-cols-4 md:w-full">
           {data.map((product) => {
             const isFullDescriptionShown = showFullDescription[product.id];
             const description = isFullDescriptionShown
@@ -94,9 +95,9 @@ const Section1 = () => {
             return (
               <div key={product.id} className="flex flex-col md:flex-row -mx-4">
                 <div className="p-4 md:w-full">
-                  <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+                  <div className="h-full border-2 border-gray-200 dark:border-orange-600 border-opacity-60 rounded-lg overflow-hidden">
                     <img
-                      className="md:h-56 md:w-10/12 w-7/12 mx-auto "
+                      className="md:h-56 h-56 w-full mx-auto"
                       src={product.image}
                       alt={product.title}
                     />
@@ -104,23 +105,24 @@ const Section1 = () => {
                       <h2 className="tracking-widest text-xs title-font font-medium text-secondary mb-1">
                         {product.category}
                       </h2>
-                      <h1 className="text-lg font-medium mb-3">
+                      <Link
+                        to={`/product/${product.id}`}
+                        className="text-lg font-medium mb-3 hover:underline hover:text-blue-700"
+                      >
                         {product.title}
-                      </h1>
-                      <p className="leading-relaxed mb-3">{description}</p>
-                      <button
+                      </Link>
+                      {/* <p className="leading-relaxed mb-3">{description}</p> */}
+                      {/* <button
                         onClick={() => toggleDescription(product.id)}
                         className="text-secondary text-sm text-green-900  hover:text-gray-900"
                       >
                         {isFullDescriptionShown ? "Less" : "More"}
-                      </button>
+                      </button> */}
                       <div className="flex flex-row justify-between items-center">
-                        <Link
-                          to={`/product/${product.id}`}
-                          className="hover:text-indigo-500"
-                        >
-                          Learn More
-                        </Link>
+                        <p className="leading-relaxed mb-3 flex items-center gap-1">
+                          <FaStar />
+                          <span>{product.rating.rate}</span>
+                        </p>
                         <div className="flex flex-col gap-2">
                           <span className="text-red-600 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 line-through">
                             ${product.price}
@@ -144,12 +146,14 @@ const Section1 = () => {
                           alt="icon"
                           className="w-3 h-1 cursor-pointer"
                         />
-                        <h1>{quantities[product.id] || 1}</h1>
+                        <h1 className="dark:text-black">
+                          {quantities[product.id] || 1}
+                        </h1>
                         <img
                           onClick={() => increase(product.id)}
                           src={Plus}
                           alt="icon"
-                          className="w-3 cursor-pointer"
+                          className="w-3 cursor-pointer "
                         />
                       </div>
                       <button
@@ -170,7 +174,7 @@ const Section1 = () => {
         </div>
         <Link
           to="/product"
-          className="bg-black hover:bg-orange-600 text-white py-2 px-1 rounded hover:bg-secondary flex justify-center w-32 mx-auto"
+          className="bg-black dark:bg-white dark:text-black  hover:bg-orange-600 text-white py-2 px-1 rounded hover:bg-secondary flex justify-center w-32 mx-auto"
         >
           Load More
         </Link>

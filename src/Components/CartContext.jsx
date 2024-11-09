@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useMemo } from "react";
 import { toast } from "react-toastify";
 
 
@@ -9,6 +9,7 @@ export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [quantities, setQuantities] = useState({});
+  const [darkMode, setDarkMode] = useState(false);
 
   // Function to add an item to the cart with the selected quantity
   const addToCart = (product, quantity) => {
@@ -42,13 +43,27 @@ export const CartProvider = ({ children }) => {
   const removeFromCart = (productId) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
   };
-
+   const totalQuantity = useMemo(
+     () => cart.reduce((acc, item) => acc + item.quantity, 0),
+     [cart]
+   );
+ const totalPrice = useMemo(
+   () => cart.reduce((acc, item) => acc + item.quantity * item.price, 0),
+   [cart]
+ );
+ const toggleDarkMode = () => {
+  setDarkMode((prevMode) => !prevMode);
+ }
   // Context value to provide to consuming components
   const contextValue = {
     cart,
     addToCart,
     removeFromCart,
     updateCartQuantity,
+    totalQuantity,
+    totalPrice,
+    toggleDarkMode,
+    darkMode,
   };
 
   return (

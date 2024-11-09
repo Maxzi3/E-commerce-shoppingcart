@@ -1,16 +1,22 @@
-import React from "react";
+import React,{useContext} from "react";
+import { CartContext } from "./CartContext";
 const Contact = () => {
+   const { darkMode } = useContext(CartContext);
   return (
-    <div className="flex md:flex-row flex-col text-secondary gap-10 justify-center py-10 ">
+    <div
+      className={`import { CartContext } from "./CartContext"; ${
+        darkMode ? "dark bg-black text-white" : "bg-white text-black"
+      } flex md:flex-row flex-col text-secondary gap-10 justify-center py-20`}
+    >
       <div>
-        <div className=" bg-gray-500 p-10 md:h-56 h-48 w-11/12 text-white rounded-lg shadow-lg md:mx-0 mx-auto">
+        <div className=" bg-gray-500 dark:bg-white dark:text-black p-10 md:h-56 h-48 w-11/12 text-white rounded-lg shadow-lg md:mx-0 mx-auto">
           <h2 className="md:pt-10 font-bold text-xl">
             Have Questions or Complaints?
           </h2>
           <p>
             Feel free to{" "}
             <a
-              className="underline underline-offset-4 text-blue-800 cursor-pointer"
+              className="underline underline-offset-4 text-blue-800 dark:text-orange-600 cursor-pointer"
               href="https://wa.me/2349026575211"
               target="_blank"
             >
@@ -20,7 +26,7 @@ const Contact = () => {
           </p>
         </div>
       </div>
-      <div className="flex flex-col items-center p-10  bg-gray-500 rounded-lg shadow-lg w-11/12 md:w-1/2 md:mx-0 mx-auto text-white/80">
+      <div className="flex flex-col items-center p-10  bg-gray-500 dark:bg-white dark:text-black rounded-lg shadow-lg w-11/12 md:w-1/2 md:mx-0 mx-auto text-white/80">
         <h1 className="md:text-2xl text-xl font-bold  mb-4">
           Message Us, we will be with you shortly
         </h1>
@@ -31,7 +37,7 @@ const Contact = () => {
                 Name
               </label>
               <input
-                className="border border-gray-300 outline-none p-3 w-full mb-4 rounded-md"
+                className="border dark:border-orange-600 border-gray-300 outline-none p-3 w-full mb-4 rounded-md"
                 type="text"
                 id="name"
                 name="name"
@@ -44,7 +50,7 @@ const Contact = () => {
               Email
             </label>
             <input
-              className="border border-gray-300 outline-none p-3 w-full mb-4 rounded-md"
+              className="border dark:border-orange-600 border-gray-300 outline-none p-3 w-full mb-4 rounded-md"
               type="email"
               id="email"
               name="email"
@@ -56,7 +62,7 @@ const Contact = () => {
               Phone
             </label>
             <input
-              className="border border-gray-300 outline-none p-3 w-full mb-4 rounded-md"
+              className="border dark:border-orange-600 border-gray-300 outline-none p-3 w-full mb-4 rounded-md"
               type="tel"
               id="phone"
               name="phone"
@@ -68,7 +74,7 @@ const Contact = () => {
               Message
             </label>
             <textarea
-              className="border border-gray-300 outline-none p-3 w-full h-32 rounded-md"
+              className="border dark:border-orange-600 border-gray-300 outline-none p-3 w-full h-32 rounded-md"
               id="message"
               name="message"
               placeholder="Write your message"
@@ -76,7 +82,7 @@ const Contact = () => {
           </div>
           <button
             type="submit"
-            className="bg-black text-white hover:bg-white hover:text-orange-600 font-semibold py-2 px-4 rounded-md"
+            className="bg-black text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded-md"
           >
             Send Message
           </button>
