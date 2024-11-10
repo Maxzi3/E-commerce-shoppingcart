@@ -85,7 +85,7 @@ const Section1 = () => {
           Featured Product
         </h1>
         <Spinner loading={loading} />
-        <div className="container px-5 py-24 mx-auto grid grid-cols-1 md:gap-2 gap-10 md:grid-cols-4 md:w-full">
+        <div className="px-5 py-24 mx-auto grid grid-cols-1 md:gap-2 gap-10 md:grid-cols-4 md:w-full">
           {data.map((product) => {
             const isFullDescriptionShown = showFullDescription[product.id];
             const description = isFullDescriptionShown
@@ -95,7 +95,7 @@ const Section1 = () => {
             return (
               <div key={product.id} className="flex flex-col md:flex-row -mx-4">
                 <div className="p-4 md:w-full">
-                  <div className="h-full border-2 border-gray-200 dark:border-orange-600 border-opacity-60 rounded-lg overflow-hidden">
+                  <div className="h-auto border-2 border-gray-200 dark:border-orange-600 border-opacity-60 rounded-lg overflow-hidden">
                     <img
                       className="md:h-56 h-56 w-full mx-auto"
                       src={product.image}

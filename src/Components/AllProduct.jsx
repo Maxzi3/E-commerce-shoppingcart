@@ -110,7 +110,7 @@ const AllProduct = () => {
       </div>
       <Spinner loading={Loading} />
       <section>
-        <div className="container px-5 py-24 mx-auto grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className=" px-5 py-24 mx-auto grid grid-cols-1 md:grid-cols-4 gap-4">
           {displayedProducts.map((product) => {
             const isFullDescriptionShown = showFullDescription[product.id];
             const description = isFullDescriptionShown
@@ -123,7 +123,7 @@ const AllProduct = () => {
                 className="flex flex-col md:flex-row -m-4 dark:text-white"
               >
                 <div className="p-4 md:w-full">
-                  <div className="h-full border-2 border-gray-200 dark:border-orange-600 border-opacity-60 rounded-lg overflow-hidden">
+                  <div className="h-auto border-2 border-gray-200 dark:border-orange-600 border-opacity-60 rounded-lg overflow-hidden">
                     <img
                       className="md:h-56 h-56 w-full mx-auto "
                       src={product.image}
