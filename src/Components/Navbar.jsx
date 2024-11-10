@@ -37,8 +37,8 @@ const Navbar = () => {
       >
         <div className="hidden md:flex fixed bg-white dark:bg-black dark:text-white w-full flex-row items-center justify-between mx-auto p-8 text-gray-600 z-50 shadow-md">
           <nav className="text-base">
-            <NavLink to="/" className="mr-20 font-bold text-3xl">
-              LIZZY STORES
+            <NavLink to="/" className="mr-20 font-bold text-3xl capitalize">
+              Lizzy stores
             </NavLink>
             <NavLink to="/" className={linkClass}>
               Home
@@ -78,8 +78,8 @@ const Navbar = () => {
               </span>
             )}
           </button>
-          <NavLink to="/" className="mr-4 font-bold text-2xl z-50">
-            LIZZY STORES
+          <NavLink to="/" className=" capitalize mr-4 font-bold text-2xl z-50">
+            Lizzy stores
           </NavLink>
           <div className="flex gap-4">
             <NavLink to="/cart" onClick={handleCart}>
@@ -89,9 +89,12 @@ const Navbar = () => {
           </div>
         </div>
         <nav
-          className={`bg-white dark:bg-black dark:text-white overflow-hidden w-2/3 h-screen absolute top-0 left-0 flex flex-col px-5 pt-20 pb-40 shadow-2xl text-2xl ${
-            isOpen ? "transform translate-x-0" : "transform -translate-x-full"
-          }`}
+          className={`bg-white dark:bg-black dark:text-white overflow-hidden w-2/3 h-screen absolute top-0 left-0 flex flex-col px-5 pt-20 pb-40 shadow-2xl text-2xl
+            transition-transform duration-500 ease-in-out
+            ${
+              isOpen ? "transform translate-x-0" : "transform -translate-x-full"
+            }
+          `}
         >
           <NavLink to="/" onClick={ToggleMenu} className={linkClass2}>
             Home

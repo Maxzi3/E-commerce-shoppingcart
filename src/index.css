@@ -11,5 +11,5 @@
         
 }
 *{
-    /* @apply dark:bg-black */
+    @apply transition-colors duration-200
 }
